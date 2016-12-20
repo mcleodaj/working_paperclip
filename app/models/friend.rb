@@ -1,12 +1,9 @@
 class Friend < ActiveRecord::Base
   validates :name, presence: true
-  validates :avatar,
-    attachment_content_type: { content_type: /\Aimage\/.*\Z/ },
-    attachment_size: { less_than: 5.megabytes }
 
-  has_attached_file :avatar, styles: {
-    thumb: '100x100>',
-    square: '200x200#',
-    medium: '300x300>'
-  }
+  has_attached_file :audio, :storage => :s3
+
+  validates :audio, presence: true
+  validates_attachment_content_type :audio, :content_type => /.wav/
+
 end
